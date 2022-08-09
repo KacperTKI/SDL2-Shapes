@@ -40,6 +40,8 @@ set(SHAPE_FILES
         src/Shapes/Line2D.h
         src/Shapes/Star2D.cpp
         src/Shapes/Star2D.h
+        src/Shapes/Shape.cpp
+        src/Shapes/Shape.h
         )
 
 ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES} ${GFX_FILES} ${SHAPE_FILES} ${UTIL_FILES})
