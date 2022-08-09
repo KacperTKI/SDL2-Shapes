@@ -9,6 +9,7 @@
 #include "../Utils/Vec2D.h"
 #include "../Shapes/Line2D.h"
 #include "../Shapes/Star2D.h"
+#include "../Shapes/Triangle.h"
 
 void Screen::ClearScreen() {
     assert(mopWindow);
@@ -161,4 +162,15 @@ void Screen::Draw(Star2D& star, const Color& c)
     {
         Draw(star[i], c);
     }
+}
+
+void Screen::Draw(const Triangle& triangle, const Color& c)
+{
+    Line2D line1(triangle.GetP0(), triangle.GetP1());
+    Line2D line2(triangle.GetP1(), triangle.GetP2());
+    Line2D line3(triangle.GetP2(), triangle.GetP0());
+
+    Draw(line1, c);
+    Draw(line2, c);
+    Draw(line3, c);
 }

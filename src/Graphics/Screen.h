@@ -12,6 +12,7 @@
 class Line2D;
 class Star2D;
 class Vec2D;
+class Triangle;
 struct SDL_Window;
 struct SDL_Surface;
 
@@ -104,6 +105,12 @@ public:
      * @param c The color of the star.
      */
     void Draw(Star2D& star, const Color& c);
+    /**
+     * @brief Draw a triangle with a given color.
+     * @param triangle The triangle which should be drawn.
+     * @param c The color of the triangle.
+     */
+    void Draw(const Triangle& triangle, const Color& c);
 };
 
 
