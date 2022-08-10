@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(SDL_A_Line)
+project(SDL_Shapes)
 
 Message("")
 Message( STATUS "CMAKE_BINARY_DIR: " ${CMAKE_BINARY_DIR} )
