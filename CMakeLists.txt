@@ -44,6 +44,8 @@ set(SHAPE_FILES
         src/Shapes/Shape.h
         src/Shapes/Triangle.cpp
         src/Shapes/Triangle.h
+        src/Shapes/AARectangle.cpp
+        src/Shapes/AARectangle.h
         )
 
 ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES} ${GFX_FILES} ${SHAPE_FILES} ${UTIL_FILES})

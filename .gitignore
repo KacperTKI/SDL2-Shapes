@@ -46,3 +46,6 @@ _deps
 /build
 
 .DS_Store
+
+
+/.vscode
