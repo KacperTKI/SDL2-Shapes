@@ -13,6 +13,7 @@ class Line2D;
 class Star2D;
 class Vec2D;
 class Triangle;
+class AARectangle;
 struct SDL_Window;
 struct SDL_Surface;
 
@@ -111,6 +112,13 @@ public:
      * @param c The color of the triangle.
      */
     void Draw(const Triangle& triangle, const Color& c);
+
+    /**
+     * @brief Draw a rectangle with a given color.
+     * @param rect The rectangle that should be drawn.
+     * @param c The color of the rectangle.
+     */
+    void Draw(const AARectangle& rect, const Color& c);
 };
 
 

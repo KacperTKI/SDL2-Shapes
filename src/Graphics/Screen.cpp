@@ -10,6 +10,7 @@
 #include "../Shapes/Line2D.h"
 #include "../Shapes/Star2D.h"
 #include "../Shapes/Triangle.h"
+#include "../Shapes/AARectangle.h"
 
 void Screen::ClearScreen() {
     assert(mopWindow);
@@ -173,4 +174,20 @@ void Screen::Draw(const Triangle& triangle, const Color& c)
     Draw(line1, c);
     Draw(line2, c);
     Draw(line3, c);
+}
+
+void Screen::Draw(const AARectangle& rect, const Color& c)
+{
+    std::vector<Vec2D> points = rect.GetPoints();
+    std::vector<Line2D> lines;
+    for (int i = 0; i < 3; i++) 
+    {
+        lines.push_back(Line2D(points[i], points[i+1]));
+    }
+    lines.push_back(Line2D(points[3], points[0]));
+
+    for (auto& line : lines) 
+    {
+        Draw(line, c);
+    }
 }
