@@ -7,6 +7,7 @@
 #include "Graphics/Screen.h"
 #include "Shapes/Triangle.h"
 #include "Shapes/AARectangle.h"
+#include "Shapes/Circle.h"
 
 // global constants for the window width and height
 const int SCREEN_WIDTH = 224;
@@ -16,10 +17,12 @@ const int MAGNIFICATION = 3;
 int main(int argc, char* argv[]) { // to use SDL the main function has to have parameters
     Screen screen;
     screen.Init(SCREEN_WIDTH, SCREEN_HEIGHT, MAGNIFICATION);
-    Triangle tri(Vec2D(100, 100), Vec2D(25, 250), Vec2D(175, 250));
-    AARectangle rect(Vec2D(50, 50), 50, 100);
-    //screen.Draw(tri, Color::Cyan());
+    Triangle tri(Vec2D(60, 10), Vec2D(10, 110), Vec2D(110, 110));
+    AARectangle rect(Vec2D(SCREEN_WIDTH / 2 - 25, SCREEN_HEIGHT / 2 - 25), 50, 50);
+    Circle circle(Vec2D(SCREEN_WIDTH / 2 + 50, SCREEN_HEIGHT / 2 + 50), 50);
+    screen.Draw(tri, Color::Cyan());
     screen.Draw(rect, Color::Green());
+    screen.Draw(circle, Color::Red());
     screen.SwapScreens();
 
     // Create an SDL Event and check it in the "game loop"

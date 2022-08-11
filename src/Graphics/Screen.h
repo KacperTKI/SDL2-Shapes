@@ -14,6 +14,7 @@ class Star2D;
 class Vec2D;
 class Triangle;
 class AARectangle;
+class Circle;
 struct SDL_Window;
 struct SDL_Surface;
 
@@ -119,6 +120,13 @@ public:
      * @param c The color of the rectangle.
      */
     void Draw(const AARectangle& rect, const Color& c);
+
+    /**
+     * @brief Draw a circle to the screen with a given color.
+     * @param circle The circle that should be drawn.
+     * @param c The color of the circle.
+     */
+    void Draw(const Circle& circle, const Color& c);
 };
 
 

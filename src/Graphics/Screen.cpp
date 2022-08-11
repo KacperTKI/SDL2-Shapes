@@ -11,6 +11,8 @@
 #include "../Shapes/Star2D.h"
 #include "../Shapes/Triangle.h"
 #include "../Shapes/AARectangle.h"
+#include "../Shapes/Circle.h"
+#include "../Utils/Utils.h"
 
 void Screen::ClearScreen() {
     assert(mopWindow);
@@ -189,5 +191,31 @@ void Screen::Draw(const AARectangle& rect, const Color& c)
     for (auto& line : lines) 
     {
         Draw(line, c);
+    }
+}
+
+void Screen::Draw(const Circle& circle, const Color& c)
+{
+    // The higher the number of segments, then the circle will have less edges
+    const float NUM_CIRCLE_SEGMENTS = 100.0f;
+
+    float angle = TWO_PI / NUM_CIRCLE_SEGMENTS;
+
+    // we get the right most point on the height of the center point
+    Vec2D p0 = Vec2D(circle.GetCenterPoint().GetX() + circle.GetRadius(), circle.GetCenterPoint().GetY());
+    Vec2D p1 = p0;
+    Line2D nextLine;
+
+    for (unsigned int i = 0; i < NUM_CIRCLE_SEGMENTS; i++)
+    {
+        // we rotate p1 by the angle
+        p1.Rotate(angle, circle.GetCenterPoint());
+        // we update the next line with the rotated point
+        nextLine.SetP0(p0);
+        nextLine.SetP1(p1);
+        // we draw the line
+        Draw(nextLine, c);
+        // we update p0 to be the next point
+        p0 = p1;
     }
 }
