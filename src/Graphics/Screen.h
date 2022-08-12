@@ -18,30 +18,10 @@ class Circle;
 struct SDL_Window;
 struct SDL_Surface;
 
-
 /**
  * @brief Screen class which handles creating the screen and double buffering.
  */
 class Screen {
-private:
-    // putting the copy constructor and assignment operator in the private field, so it would not be used.
-    Screen(const Screen& screen);
-    Screen& operator=(const Screen& screen);
-
-    /**
-     * @brief Clears the whole screen to the clear color.
-     */
-    void ClearScreen();
-
-    uint32_t mWidth;
-    uint32_t mHeight;
-
-    Color mClearColor;
-    ScreenBuffer mBackBuffer;
-
-    SDL_Window *mopWindow;
-    SDL_Surface *mnopSurface;
-
 public:
     /**
      * @brief Default Constructor
@@ -111,22 +91,54 @@ public:
      * @brief Draw a triangle with a given color.
      * @param triangle The triangle which should be drawn.
      * @param c The color of the triangle.
+     * @param fill Flag to check, if the shape should be filled
+     * @param fillC The color of the filling 
      */
-    void Draw(const Triangle& triangle, const Color& c);
+    void Draw(const Triangle& triangle, const Color& c, bool fill = false, const Color& fillC = Color::White());
 
     /**
      * @brief Draw a rectangle with a given color.
      * @param rect The rectangle that should be drawn.
      * @param c The color of the rectangle.
+     * @param fill Flag to check, if the shape should be filled
+     * @param fillC The color of the filling
      */
-    void Draw(const AARectangle& rect, const Color& c);
+    void Draw(const AARectangle& rect, const Color& c, bool fill = false, const Color& fillC = Color::White());
 
     /**
      * @brief Draw a circle to the screen with a given color.
      * @param circle The circle that should be drawn.
      * @param c The color of the circle.
+     * @param fill Flag to check, if the shape should be filled
+     * @param fillC The color of the filling
      */
-    void Draw(const Circle& circle, const Color& c);
+    void Draw(const Circle& circle, const Color& c, bool fill = false, const Color& fillC = Color::White());
+
+private:
+    // putting the copy constructor and assignment operator in the private field, so it would not be used.
+    Screen(const Screen& screen);
+    Screen& operator=(const Screen& screen);
+
+    /**
+     * @brief Clears the whole screen to the clear color.
+     */
+    void ClearScreen();
+
+    /**
+     * @brief Fill the polygon with a color.
+     * @param points The points of the polygon.
+     * @param c The color of the filling.
+     */
+    void FillPoly(const std::vector<Vec2D>& points, const Color& c);
+
+    uint32_t mWidth;
+    uint32_t mHeight;
+
+    Color mClearColor;
+    ScreenBuffer mBackBuffer;
+
+    SDL_Window *mopWindow;
+    SDL_Surface *mnopSurface;
 };
 
 
