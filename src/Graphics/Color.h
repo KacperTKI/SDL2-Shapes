@@ -27,6 +27,14 @@ public:
      */
     static void InitFormat(const SDL_PixelFormat *format);
 
+    /**
+     * @brief Alpha blending
+     * @param source The source color
+     * @param dest The destination color
+     * @return A blended color of the source and destination.
+     */
+    static Color Evaluate1MinusSourceAlpha(const Color& source, const Color& dest);
+
     static Color Black() { return Color(0, 0, 0, 255); }
     static Color White() { return Color(255, 255, 255, 255); }
     static Color Blue() { return Color(0, 0, 255, 255); }

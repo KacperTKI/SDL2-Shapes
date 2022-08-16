@@ -145,15 +145,16 @@ SDL_Window *Screen::Init(uint32_t w, uint32_t h, uint32_t mag) {
 
     // Create window
     // NOTE: to have no flags enter 0
-    mopWindow = SDL_CreateWindow("Line-Program", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+    mopWindow = SDL_CreateWindow("SDL-Shapes", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                             mWidth * mag, mHeight * mag, 0);
 
     if (mopWindow) {
         // Create window surface
         mnopSurface = SDL_GetWindowSurface(mopWindow);
 
-        // Get the pixel format of the current machine
-        SDL_PixelFormat *pixelFormat = mnopSurface->format;
+        // Just in case, if the machine does not have a alpha channel automaticaly, we force it to use one
+        SDL_PixelFormat *pixelFormat = SDL_AllocFormat(SDL_PIXELFORMAT_BGRA8888);
+        std::cout << SDL_GetPixelFormatName(pixelFormat->format) << '\n';
 
         // Initialize the format
         Color::InitFormat(pixelFormat);

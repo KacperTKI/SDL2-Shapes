@@ -88,10 +88,11 @@ void ScreenBuffer::SetPixel(const Color &c, int x, int y) {
         auto *pixels = (uint32_t *) mopSurface->pixels;
 
         // Gets the index of the pixel which is located at the given coordinates
-        uint32_t index = GetIndex(y, x);
+        auto index = GetIndex(y, x);
 
         // Changes the pixel color
-        pixels[index] = c.GetPixelColor();
+        auto surfaceColor = Color(pixels[index]); // destination color
+        pixels[index] = Color::Evaluate1MinusSourceAlpha(c, surfaceColor).GetPixelColor();
 
         // Unlocks the surface so it can be used again
         SDL_UnlockSurface(mopSurface);

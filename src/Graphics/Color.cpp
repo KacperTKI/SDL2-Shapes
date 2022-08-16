@@ -100,3 +100,22 @@ uint8_t Color::GetAlpha() const {
 }
 
 
+Color Color::Evaluate1MinusSourceAlpha(const Color& source, const Color& dest)
+{
+    // blending equation
+    // SourceRGB * sourceAlpha + DestinationRGB * (1 - sourceAlpha)
+    auto alpha = source.GetAlpha();
+    
+    auto sourceAlpha = (float)alpha / 255.0f;
+    auto destAlpha = 1.0f - sourceAlpha;
+
+    Color outColor;
+
+    // The out color always has full alpha
+    outColor.SetAlpha(255);
+    outColor.SetRed(float(source.GetRed()) * sourceAlpha + dest.GetRed() * destAlpha);
+	outColor.SetGreen(float(source.GetGreen()) * sourceAlpha + dest.GetGreen() * destAlpha);
+	outColor.SetBlue(float(source.GetBlue()) * sourceAlpha + dest.GetBlue() * destAlpha);
+
+    return outColor;
+}
