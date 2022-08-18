@@ -73,6 +73,12 @@ public:
      */
     bool ContainsPoint(const Vec2D& p) const;
 
+    /**
+     * @brief Move the center of the triangle to a new point.
+     * @param p the new center point
+     */
+    virtual void MoveTo(const Vec2D& p) override;
+
 private:
     /**
      * @brief Get the area of a triangle with the given three points.

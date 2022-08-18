@@ -31,6 +31,12 @@ public:
      */
     void MoveBy (const Vec2D& deltaOffset);
 
+    /**
+     * @brief Move the shape to the given point
+     * @param p New point of the shape
+     */
+    virtual void MoveTo(const Vec2D& p) = 0;
+
 protected:
     std::vector<Vec2D> mPoints;
 };

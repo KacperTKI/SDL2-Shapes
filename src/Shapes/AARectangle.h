@@ -61,7 +61,7 @@ public:
      * @brief Move the rectangle to a new position.
      * @param position The new position of the rectangle.
      */
-    void MoveTo(const Vec2D& position);
+    virtual void MoveTo(const Vec2D& position) override;
 
     /**
      * @brief Get the center point of the rectangle.

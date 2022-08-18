@@ -36,7 +36,7 @@ public:
      * @brief Move the circle center point to a new position.
      * @param position The new position of the circle.
      */
-    inline void MoveTo(const Vec2D& position) { mPoints[0] = position; }
+    virtual inline void MoveTo(const Vec2D& position) override { mPoints[0] = position; }
 
     /**
      * @brief Check if another circle intersects with this one.
