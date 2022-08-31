@@ -8,8 +8,7 @@
 #include <vector>
 
 #include "../Utils/Vec2D.h"
-
-class Line2D;
+#include "Line2D.h"
 
 /**
  * @brief The Star2D class is used as representation as well (just like Line2D), so that the screen can use it to draw a star.

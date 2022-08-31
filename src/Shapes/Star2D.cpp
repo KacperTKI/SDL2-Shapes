@@ -1,6 +1,4 @@
 #include "Star2D.h"
-#include "Line2D.h"
-#include "../Utils/Vec2D.h"
 
 Star2D::Star2D() : Star2D(Vec2D(0, 0), 0, 0, 0) {}
 

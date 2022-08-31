@@ -1,7 +1,4 @@
-#include <cmath>
-
 #include "AARectangle.h"
-#include "../Utils/Utils.h"
 
 AARectangle::AARectangle() : AARectangle(Vec2D::sZERO, Vec2D::sZERO) 
 {
