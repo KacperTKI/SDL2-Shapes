@@ -48,5 +48,6 @@ _deps
 
 .DS_Store
 
+.cache
 
 /.vscode
