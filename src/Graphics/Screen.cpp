@@ -17,6 +17,12 @@
 #include "../Shapes/Circle.h"
 #include "../Utils/Utils.h"
 
+Screen::Screen()
+    : mWidth(0), mHeight(0), mopWindow(nullptr), mnopSurface(nullptr)
+{
+
+}
+
 void Screen::ClearScreen() {
     assert(mopWindow);
     if (mopWindow)
@@ -34,7 +40,7 @@ void Screen::FillPoly(const std::vector<Vec2D>& points, const Color& c)
         float left = points[0].GetX();
 
         // get the most top, bottom, left and right pixel of the shape
-        for (size_t i = 1; i < points.size(); i++) 
+        for (size_t i = 1; i < points.size(); i++)
         {
             if (points[i].GetY() < top)
             {
@@ -70,7 +76,8 @@ void Screen::FillPoly(const std::vector<Vec2D>& points, const Color& c)
                 float pointjY = points[j].GetY();
 
                 // check if the pixel is inbetween the top and the bottom
-                if ((pointiY <= (float)pixelY && pointjY > (float)pixelY) || (pointjY <= (float)pixelY && pointiY > (float)pixelY))
+                if ((pointiY <= (float)pixelY && pointjY > (float)pixelY) ||
+                    (pointjY <= (float)pixelY && pointiY > (float)pixelY))
                 {
                     // Check that the denominator is not zero
                     float denom = pointjY - pointiY;
@@ -78,50 +85,48 @@ void Screen::FillPoly(const std::vector<Vec2D>& points, const Color& c)
                     {
                         continue;
                     }
-                    
                     // Solve for x if the denominator is not 0 and push the result onto the vector
-                    float x = points[i].GetX() + (pixelY - pointiY)/(denom) * (points[j].GetX() - points[i].GetX());
+                    float x = points[i].GetX() + (pixelY - pointiY)/(denom)
+                        * (points[j].GetX() - points[i].GetX());
                     nodeXVec.push_back(x);
                 }
+
                 j = i;
 
-                // sort the vector in ascending order, so we draw the lines from the left most, to the right most
-                std::sort(nodeXVec.begin(), nodeXVec.end(), std::less<>());
+            }
 
-                for (size_t k = 0; k < nodeXVec.size(); k+=2) // +=2 because we do this to each pair of pixels
+            // sort the vector in ascending order, so we draw the lines from the left most, to the right most
+            std::sort(nodeXVec.begin(), nodeXVec.end(), std::less<>());
+
+            for (size_t k = 0; k < nodeXVec.size(); k+=2) // +=2 because we do this to each pair of pixels
+            {
+                // bound the x's so it does not go outside our boundries
+                if (nodeXVec[k] > right)
                 {
-                    // bound the x's so it does not go outside our boundries
-                    if (nodeXVec[k] > right)
+                    break;
+                }
+
+                if (nodeXVec[k+1] > left)
+                {
+                    if (nodeXVec[k] < left)
                     {
-                        break;
+                        nodeXVec[k] = left;
                     }
 
-                    if (nodeXVec[k+1] > left)
+                    if (nodeXVec[k+1] > right)
                     {
-                        if (nodeXVec[k] < left)
-                        {
-                            nodeXVec[k] = left;
-                        }
+                        nodeXVec[k+1] = right;
+                    }
 
-                        if (nodeXVec[k+1] > right)
-                        {
-                            nodeXVec[k+1] = right;
-                        }
-
-                        // after setting the boundries, draw each individual pixel
-                        for (int pixelX = nodeXVec[k]; pixelX < std::round(nodeXVec[k+1]); pixelX++)
-                        {
-                            Draw(pixelX, pixelY, c);
-                        }
+                    // after setting the boundries, draw each individual pixel
+                    for (int pixelX = nodeXVec[k]; pixelX < std::round(nodeXVec[k+1]); pixelX++)
+                    {
+                        Draw(pixelX, pixelY, c);
                     }
                 }
             }
         }
     }
-}
-
-Screen::Screen() : mWidth(0), mHeight(0), mopWindow(nullptr), mnopSurface(nullptr) {
-
 }
 
 Screen::~Screen() {
@@ -205,7 +210,6 @@ void Screen::Draw(const Line2D& line, const Color& c) {
     assert(mopWindow);
     if (mopWindow) {
         int dx, dy;
-        
         // the algorithm works with integers, so we have to round our float values
         int x0 = roundf(line.GetP0().GetX());
         int y0 = roundf(line.GetP0().GetY());
@@ -215,7 +219,7 @@ void Screen::Draw(const Line2D& line, const Color& c) {
         dx = x1 - x0;
         dy = y1 - y0;
 
-        signed const char ix((dx > 0) - (dx < 0)); 
+        signed const char ix((dx > 0) - (dx < 0));
         signed const char iy((dy > 0) - (dy < 0));
         // both evaluate to either 1 or -1
         // with that, we know if the line goes up or down
@@ -244,13 +248,11 @@ void Screen::Draw(const Line2D& line, const Color& c) {
         } else {
             // go along the y
             int d = dx - dy/2;
-            
             while (y0 != y1) {
                 if (d >= 0) {
                     d -= dy;
                     x0 += ix;
                 }
-                
                 d += dx;
                 y0 += iy;
 
@@ -301,13 +303,13 @@ void Screen::Draw(const AARectangle& rect, const Color& c, bool fill, const Colo
 
         std::vector<Vec2D> points = rect.GetPoints();
         std::vector<Line2D> lines;
-        for (int i = 0; i < 3; i++) 
+        for (int i = 0; i < 3; i++)
         {
             lines.push_back(Line2D(points[i], points[i+1]));
         }
         lines.push_back(Line2D(points[3], points[0]));
 
-        for (auto& line : lines) 
+        for (auto& line : lines)
         {
             Draw(line, c);
         }
@@ -319,16 +321,17 @@ void Screen::Draw(const Circle& circle, const Color& c, bool fill, const Color& 
     assert(mopWindow);
     if (mopWindow) {
         // The higher the number of segments, then the circle will have less edges
-        const float NUM_CIRCLE_SEGMENTS = 100.0f;
+        const unsigned int NUM_CIRCLE_SEGMENTS = 100;
 
         // vector for holding all the segments of the circle
         std::vector<Line2D> lines;
         std::vector<Vec2D> circlePoints;
 
-        float angle = TWO_PI / NUM_CIRCLE_SEGMENTS;
+        float angle = TWO_PI / float(NUM_CIRCLE_SEGMENTS);
 
         // we get the right most point on the height of the center point
-        Vec2D p0 = Vec2D(circle.GetCenterPoint().GetX() + circle.GetRadius(), circle.GetCenterPoint().GetY());
+        Vec2D p0 = Vec2D(circle.GetCenterPoint().GetX() + circle.GetRadius(),
+                         circle.GetCenterPoint().GetY());
         Vec2D p1 = p0;
         Line2D nextLine;
 

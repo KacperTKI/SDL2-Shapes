@@ -6,6 +6,8 @@
 #define SDL_A_LINE_SCREEN_H
 
 #include <cstdint>
+#include <vector>
+
 #include "ScreenBuffer.h"
 #include "Color.h"
 
