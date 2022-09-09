@@ -19,7 +19,8 @@ ScreenBuffer::ScreenBuffer() : mopSurface(nullptr) {
 
 }
 
-ScreenBuffer::ScreenBuffer(const ScreenBuffer &screenBuffer) : mopSurface(nullptr) {
+ScreenBuffer::ScreenBuffer(const ScreenBuffer &screenBuffer)
+    : mopSurface(nullptr) {
     // Check if there exists a surface to copy
     if (screenBuffer.mopSurface) {
         // If so, then copy the other surface
@@ -30,6 +31,33 @@ ScreenBuffer::ScreenBuffer(const ScreenBuffer &screenBuffer) : mopSurface(nullpt
         //SDL_BlitSurface copies all the pixel from the source surface to the destination surface
         SDL_BlitSurface(screenBuffer.mopSurface, nullptr, mopSurface, nullptr);
     }
+}
+
+ScreenBuffer::ScreenBuffer(ScreenBuffer&& otherBuffer)
+    : mopSurface(otherBuffer.mopSurface)
+{
+    // invalidate the other buffer
+    otherBuffer.mopSurface = nullptr;
+}
+
+ScreenBuffer& ScreenBuffer::operator=(ScreenBuffer&& otherBuffer)
+{
+    // check if it is assigning itself
+    if (this == &otherBuffer)
+    {
+        return *this;
+    }
+
+    // delete existing data
+    delete mopSurface;
+
+    // take ownership of the other data
+    mopSurface = otherBuffer.mopSurface;
+
+    // invalidate the other buffer
+    otherBuffer.mopSurface = nullptr;
+
+    return *this;
 }
 
 ScreenBuffer::~ScreenBuffer() {

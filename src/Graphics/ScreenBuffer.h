@@ -13,9 +13,6 @@ struct SDL_Surface;
  * which will handle the surfaces. (Double Buffering)
  */
 class ScreenBuffer {
-private:
-    SDL_Surface *mopSurface;
-    uint32_t GetIndex(int r, int c);
 public:
     /**
      * @brief Defualt Constructor
@@ -26,6 +23,18 @@ public:
      * @param screenBuffer buffer which will be copied.
      */
     ScreenBuffer(const ScreenBuffer& screenBuffer);
+
+    /**
+     * @brief Move Constructor
+     * @param otherBuffer The other screen buffer which gets moved
+     */
+    ScreenBuffer(ScreenBuffer&& otherBuffer);
+    /**
+     * @brief Move Assignment Operator
+     * @param otherBuffer The moved screen buffer that this gets assigned to
+     */
+    ScreenBuffer& operator=(ScreenBuffer&& otherBuffer);
+
     /**
      * @brief Destructor
      */
@@ -65,6 +74,9 @@ public:
      * @param y The y coordinate in the window.
      */
     void SetPixel(const Color& c, int x, int y);
+private:
+    SDL_Surface *mopSurface;
+    uint32_t GetIndex(int r, int c);
 };
 
 #endif //SDL_A_LINE_SCREENBUFFER_H
