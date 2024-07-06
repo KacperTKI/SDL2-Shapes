@@ -15,13 +15,13 @@ public:
      * @param line The line which should be drawn and rotated.
      * @param screen The screen which draws the line.
      */
-    static void CounterClockwiseLine(Line2D& line, Screen& screen);
+    static void CounterClockwiseLine(Line2D& line, Screen& screen, int dt);
     /**
      * @brief Draw a star and rotate it counter clock-wise.
      * @param star The star which should be drawn and rotated.
      * @param screen The screen which draws the star.
      */
-    static void CounterClockwiseStar(Star2D& star, Screen& screen);
+    static void CounterClockwiseStar(Star2D& star, Screen& screen, int dt);
 };
 
 #endif
